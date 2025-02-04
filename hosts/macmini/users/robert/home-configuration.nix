@@ -2,14 +2,14 @@
   pkgs,
   perSystem,
   inputs,
+  flake,
+  users,
   ...
 }:
 {
   home.stateVersion = "24.11";
 
-  imports = [
-    inputs.self.homeModules.robert
-  ];
+  imports = [ users.robert ];
 
   home.sessionVariables = {
     # My fish configuration uses this to check whether it should check if
