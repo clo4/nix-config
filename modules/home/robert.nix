@@ -48,7 +48,12 @@ in
     pkgs.wget
     pkgs.zoxide
     steelWithLsp
+
+    # Fonts
+    pkgs.nerd-fonts.roboto-mono
   ];
+
+  fonts.fontconfig.enable = !pkgs.stdenv.isDarwin;
 
   my.config.force = true;
   my.config.source = {

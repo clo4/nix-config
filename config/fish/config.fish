@@ -22,12 +22,11 @@ if status is-interactive
     end
 end
 
+# Deduplicate PATH because it might contain dupes after the handoff from ZSH
 set --local new_path
-
 for path in $PATH
     if not contains -- $path $new_path
         set new_path $new_path $path
     end
 end
-
 set --global --export PATH $new_path

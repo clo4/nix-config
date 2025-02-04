@@ -16,6 +16,7 @@ abbr -a nfs "nix flake show"
 abbr -a nfl "nix flake lock"
 abbr -a nfu "nix flake update"
 abbr -a nfuc "nix flake update --commit-lock-file"
+abbr -a nfc "nix flake check"
 
 # Random abbreviations that are easier to type on some layouts, because I hop
 # around a lot.

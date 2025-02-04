@@ -4,8 +4,8 @@ font-family = RobotoMono Nerd Font
 font-size = 12
 window-height = 60
 window-width = 170
-window-theme = dark
-theme = GruvboxDark
+window-theme = system
+theme = dark:GruvboxDark,light:GruvboxLight
 auto-update-channel = tip
 
 # These config files will only exist on the platform they are named after.
