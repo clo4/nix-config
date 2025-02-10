@@ -19,5 +19,6 @@
 
   # Linux 6.11 broke Rosetta, but it seems to be on Apple to fix it:
   # https://github.com/utmapp/UTM/discussions/6799#discussioncomment-11247028
-  boot.kernelPackages = pkgs.linuxPackages_6_10;
+  # 6.6 is the latest supported release that won't break it.
+  boot.kernelPackages = pkgs.linuxPackages_6_6;
 }
