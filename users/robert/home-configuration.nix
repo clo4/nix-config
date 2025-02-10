@@ -14,7 +14,11 @@ let
     cargoBuildFlags = "-p cargo-steel-lib -p steel-interpreter -p steel-language-server";
   });
 
-  fish-lsp = pkgs.fish-lsp.overrideAttrs (oldAttrs: rec {
+  # This isn't being used at the moment because building the completions
+  # is broken on my nix-darwin setup. I don't know what the underlying
+  # reason is, but as a short-term hack, removing these lines might work:
+  # https://github.com/NixOS/nixpkgs/blob/a45fa362d887f4d4a7157d95c28ca9ce2899b70e/pkgs/by-name/fi/fish-lsp/package.nix#L64-L65
+  _fish-lsp = pkgs.fish-lsp.overrideAttrs (oldAttrs: rec {
     version = "1.0.8-4";
     src = pkgs.fetchFromGitHub {
       owner = "ndonfris";
@@ -43,7 +47,7 @@ in
     pkgs.eza
     pkgs.fd
     pkgs.fish
-    fish-lsp
+    pkgs.fish-lsp
     pkgs.fzf
     pkgs.git
     pkgs.git-open
@@ -132,4 +136,5 @@ in
     nix-darwin.flake = inputs.nix-darwin;
     helix.flake = inputs.helix;
   };
+  nix.settings.log-lines = 25;
 }

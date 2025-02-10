@@ -106,7 +106,7 @@ The bootstrap process should probably look something like this:
 Currently:
 
 ```bash
-sudo nix --extra-experimental-options 'nix-command flakes' run github:clo4/nix-dotfiles/vps#builder-install
+sudo nix --extra-experimental-features 'nix-command flakes' run github:clo4/nix-dotfiles/vps#builder-install
 ```
 
 </details>

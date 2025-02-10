@@ -2,6 +2,7 @@
   pkgs,
   perSystem,
   inputs,
+  flake,
   ...
 }:
 {
