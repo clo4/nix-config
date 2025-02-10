@@ -7,7 +7,7 @@
 }:
 {
   imports = [
-    ./disk.nix
+    ./disko.nix
     "${modulesPath}/installer/scan/not-detected.nix"
   ];
 
@@ -37,24 +37,36 @@
     "flakes"
   ];
   nix.settings.log-lines = 25;
+  nix.settings.trusted-users = [ "@wheel" ];
+  nix.settings.auto-optimise-store = true;
   nix.gc.automatic = true;
 
   networking.hostName = "builder";
   networking.useNetworkd = true;
-  networking.useDHCP = true;
+  networking.firewall.allowedTCPPorts = [ 22 ];
 
-  services.openssh.enable = true;
+  services.openssh = {
+    enable = true;
+    settings = {
+      PermitRootLogin = "no";
+      PasswordAuthentication = false;
+      KbdInteractiveAuthentication = false;
+    };
+  };
 
-  users.users.root.openssh.authorizedKeys.keyFiles = [ "${flake}/users/robert/authorized_keys" ];
+  users.users.root.hashedPassword = "!";
+  users.users.builder = {
+    openssh.authorizedKeys.keyFiles = [
+      "${flake}/hosts/macmini/users/robert/authorized_keys"
+      "${flake}/hosts/macbook-air/users/robert/authorized_keys"
+    ];
+    isNormalUser = true;
+    extraGroups = [ "wheel" ];
+  };
+  security.sudo.wheelNeedsPassword = false;
 
-  # users.users.root.hashedPassword = "!";
-  # users.users.builder = {
-  #   openssh.authorizedKeys.keyFiles = [ "${flake}/users/robert/authorized_keys" ];
-  #   isNormalUser = true;
-  #   extraGroups = [ "wheel" ];
-  # };
-  # security.sudo.wheelNeedsPassword = false;
-
+  # TODO: Disable this, use something like `ssh builder@127.0.0.1 -p 33322`
+  # so the builder is only available to the host system.
   services.avahi = {
     enable = true;
     nssmdns4 = true;

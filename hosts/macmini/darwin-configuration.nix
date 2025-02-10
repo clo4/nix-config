@@ -59,6 +59,7 @@
     "flakes"
   ];
   nix.channel.enable = false;
+  # TODO: should I make 'robert' a trusted user?
   nixpkgs.config.allowUnfree = true;
 
   services.tailscale.enable = true;
