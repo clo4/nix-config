@@ -36,3 +36,7 @@ end
 if set -q GHOSTTY_BIN_DIR; and not contains -- $GHOSTTY_BIN_DIR $PATH
     set --append PATH $GHOSTTY_BIN_DIR
 end
+
+# Fish comes with some builtin aliases for ls, which we don't want.
+# Instead, `l` is an abbreviation defined in the abbreviations.fish file.
+functions -e la ll

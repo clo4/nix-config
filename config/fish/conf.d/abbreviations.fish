@@ -4,6 +4,8 @@ abbr -a - "cd -"
 abbr -a .. "cd .."
 abbr -a cpr "cp -r"
 
+abbr -a l "ls -lAhH"
+
 abbr -a lc limactl
 
 abbr -a n nix
