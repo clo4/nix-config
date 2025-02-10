@@ -1,5 +1,7 @@
 function paths
-for p in $PATH
-echo $p
-end
+    set --append --local argv PATH
+    set --local --path paths $$argv[1]
+    for p in $paths
+        echo $p
+    end
 end
