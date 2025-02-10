@@ -40,11 +40,6 @@ This configuration is applied per-host with tweaks on top of it: [hosts](/hosts)
   Steel language server integration works.
 - Homebrew is installed automatically and managed declaratively with
   [nix-homebrew](https://github.com/zhaofengli/nix-homebrew)
-- Fish is not my login shell, but is `exec`'d by ZSH if the session is
-  interactive. Further invocations of `zsh` will not become Fish. ZSH handles
-  some environment setup (sourcing Home Manager's setup, etc.) then hands off
-  execution to Fish which sets up everything I need interactively. If `fish` is
-  not available, ZSH will be set up as a usable fallback.
 
 More of my tweaks will be documented in the future.
 
@@ -58,3 +53,54 @@ More of my tweaks will be documented in the future.
     installed nix-darwin. Instead, this is a standalone configuration.
 
 In the future, I'll likely have a WSL host and NixOS host for homelab stuff.
+
+## Linux builder on aarch64-darwin
+
+This is still just in the experimentation phase. The following is my thought
+process.
+
+<details>
+
+I want to have a way to build x86_64-linux software (mainly, NixOS itself) from
+my aarch64-darwin machines. This requires a builder machine running Linux. That
+builder doesn't have to be a physical system - it could just be a VM running on
+the same device, so long as it's accessible by SSH.
+
+The builder doesn't have to run NixOS; the only requirement is that Nix is
+installed. However, running NixOS makes configuring it significantly easier,
+which is important because this builder will be running on two devices.
+
+The VM should use Virtualization.Framework as its VM backend. It will be
+aarch64-linux so that the host system doesn't have to emulate x86-64
+instructions. Rosetta will be available so that x86-64 software can be built at
+near-native speed, because using emulation is _far_ too slow.
+
+The builder also has to run a specific Linux kernel version, since versions
+newer than 6.10 break Rosetta (this is Apple's fault).
+
+These requirements mean that Docker (and other containerization solutions) are
+not viable, since I need full control over the system.
+
+The best options right now seem to be:
+
+- Tart: https://tart.run
+- Lima: https://lima-vm.io
+- UTM: https://getutm.app
+
+Tart is not "free software", while Lima and UTM are. UTM requires that the
+application is running (can run without dock icon, but that introduces some
+weirdness), while Lima is fully headless. However, Lima requires more
+configuration and seems (?) to have a little more overhead to get working -- I'm
+trying to optimize this for being really, really simple.
+
+### Running with UTM
+
+The bootstrap process should probably look something like this:
+
+1. Create a VM with the NixOS ISO named "builder"
+2. Run something like
+   `nixos-rebuild switch --flake github:clo4/nix-dotfiles#builder` (which could
+   automatically configure the disk too)
+3. ... Profit?
+
+</details>
