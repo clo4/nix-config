@@ -44,6 +44,7 @@ in
     pkgs.ripgrep
     pkgs.tealdeer
     pkgs.tmux
+    pkgs.tree
     pkgs.vim
     pkgs.wget
     pkgs.zoxide
