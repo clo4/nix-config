@@ -1,3 +1,5 @@
+# This is the shared user configuration applied and customised by each
+# host's `robert` user.
 {
   pkgs,
   perSystem,
@@ -10,6 +12,20 @@
 let
   steelWithLsp = perSystem.steel.default.overrideAttrs (oldAttrs: {
     cargoBuildFlags = "-p cargo-steel-lib -p steel-interpreter -p steel-language-server";
+  });
+
+  fish-lsp = pkgs.fish-lsp.overrideAttrs (oldAttrs: rec {
+    version = "1.0.8-4";
+    src = pkgs.fetchFromGitHub {
+      owner = "ndonfris";
+      repo = "fish-lsp";
+      rev = "d8780ab2fdc76af72a39106c3e81b11a2edfa215";
+      hash = "sha256-N0XN8Qj2/ky0Eiz70F4jEhrkBddvd7FSPH3QX5453uA=";
+    };
+    yarnOfflineCache = pkgs.fetchYarnDeps {
+      yarnLock = src + "/yarn.lock";
+      hash = "sha256-83QhVDG/zyMbHJbV48m84eimXejLKdeVrdk1uZjI8bk=";
+    };
   });
 in
 {
@@ -26,7 +42,8 @@ in
     pkgs.direnv
     pkgs.eza
     pkgs.fd
-    pkgs.fish-lsp
+    pkgs.fish
+    fish-lsp
     pkgs.fzf
     pkgs.git
     pkgs.git-open

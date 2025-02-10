@@ -103,4 +103,10 @@ The bootstrap process should probably look something like this:
    automatically configure the disk too)
 3. ... Profit?
 
+Currently:
+
+```bash
+sudo nix --extra-experimental-options 'nix-command flakes' run github:clo4/nix-dotfiles/vps#builder-install
+```
+
 </details>

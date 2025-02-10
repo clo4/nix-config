@@ -1,20 +1,19 @@
-{ inputs, pkgs, ... }:
+{
+  inputs,
+  pkgs,
+  flake,
+  ...
+}:
 {
   imports = [
-    inputs.self.homeModules.robert
-  ];
-
-  # In my Mac mini configuration, fish is installed globally, so it's
-  # not included in my shared user configuration.
-  home.packages = [
-    pkgs.fish
+    "${flake}/users/robert/home-configuration.nix"
   ];
 
   home.stateVersion = "24.05";
 
   my.config.directory = "Developer/nix-dotfiles/config";
 
-  # FIXME: This may not be working. Figure out why. Does it require logout?
+  # FIXME: This isn't working, need to figure out why
   targets.darwin.currentHostDefaults = {
     NSGlobalDomain = {
       NSUserKeyEquivalents = {

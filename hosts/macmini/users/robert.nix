@@ -8,7 +8,7 @@
   home.stateVersion = "24.11";
 
   imports = [
-    inputs.self.homeModules.robert
+    "${flake}/users/robert/home-configuration.nix"
   ];
 
   home.sessionVariables = {
