@@ -3,8 +3,8 @@
   "vim_mode": true,
   "buffer_font_family": "RobotoMono Nerd Font",
   "ui_font_family": "RobotoMono Nerd Font",
-  "ui_font_size": 13,
-  "buffer_font_size": 13,
+  "ui_font_size": 12,
+  "buffer_font_size": 12,
   "languages": {
     "Nix": {
       "tab_size": 2
