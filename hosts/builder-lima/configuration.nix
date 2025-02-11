@@ -7,7 +7,7 @@
 }:
 {
   imports = [
-    ./disko.nix
+    # ./disko.nix
     "${modulesPath}/installer/scan/not-detected.nix"
   ];
 
@@ -23,6 +23,7 @@
   boot.loader.systemd-boot.enable = true;
 
   virtualisation.rosetta.enable = true;
+  virtualisation.rosetta.mountTag = "vz-rosetta";
 
   system.stateVersion = "24.11";
 
@@ -60,14 +61,18 @@
 
   services.getty.autologinUser = "builder";
 
-  users.users.root.hashedPassword = "!";
-  users.users.builder = {
-    openssh.authorizedKeys.keyFiles = [
-      "${flake}/hosts/macmini/users/robert/authorized_keys"
-      "${flake}/hosts/macbook-air/users/robert/authorized_keys"
-    ];
-    isNormalUser = true;
-    extraGroups = [ "wheel" ];
+  # users.users.root.hashedPassword = "!";
+  users = {
+    mutableUsers = false;
+
+    users.builder = {
+      openssh.authorizedKeys.keyFiles = [
+        "${flake}/hosts/macmini/users/robert/authorized_keys"
+        "${flake}/hosts/macbook-air/users/robert/authorized_keys"
+      ];
+      isNormalUser = true;
+      extraGroups = [ "wheel" ];
+    };
   };
   security.sudo.wheelNeedsPassword = false;
 
