@@ -40,11 +40,6 @@ This configuration is applied per-host with tweaks on top of it: [hosts](/hosts)
   Steel language server integration works.
 - Homebrew is installed automatically and managed declaratively with
   [nix-homebrew](https://github.com/zhaofengli/nix-homebrew)
-- Fish is not my login shell, but is `exec`'d by ZSH if the session is
-  interactive. Further invocations of `zsh` will not become Fish. ZSH handles
-  some environment setup (sourcing Home Manager's setup, etc.) then hands off
-  execution to Fish which sets up everything I need interactively. If `fish` is
-  not available, ZSH will be set up as a usable fallback.
 
 More of my tweaks will be documented in the future.
 
@@ -58,3 +53,9 @@ More of my tweaks will be documented in the future.
     installed nix-darwin. Instead, this is a standalone configuration.
 
 In the future, I'll likely have a WSL host and NixOS host for homelab stuff.
+
+### Bootstrapping homeserver1
+
+```bash
+sudo nix --extra-experimental-features 'nix-command flakes' run github:clo4/nix-dotfiles/vps#homeserver1-install
+```

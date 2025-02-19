@@ -3,6 +3,7 @@
 result
 result-*
 .DS_Store
+.direnv
 /.helix
 .flake
 .pkgs
